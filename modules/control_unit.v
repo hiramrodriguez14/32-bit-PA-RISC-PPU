@@ -378,13 +378,13 @@ module control_unit(
                     SOH_OP = 3'b000;
                     RAM_CTRL = 4'b0000;
                     L = 1'b0;
-                    ID_SR = 2'b10;
+                    ID_SR = 2'b00;
                     RF_LE = 1'b0;
                     PSW_EN = 1'b0;
                     CO_EN = 1'b0;
                     COMB = 2'b00;
                     SH = 1'b0;
                 end
-            endcase // <-- CIERRA el case principal
+            endcase 
         end
     endmodule

@@ -1,3 +1,6 @@
+//Program Counter module
+//Author: Gabriel Sanchez
+
 module programCounter (
     input clk,
     input reset,

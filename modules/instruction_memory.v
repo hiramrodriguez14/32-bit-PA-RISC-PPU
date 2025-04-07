@@ -1,4 +1,5 @@
-
+//Description: Instruction Memory Module
+//Author: Gabriel Sanchez
 
 module instruction_memory (
     input [7:0] A,      // Dirección de 8 bits (256 ubicaciones)
