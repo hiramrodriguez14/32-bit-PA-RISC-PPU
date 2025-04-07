@@ -166,7 +166,7 @@ module control_unit(
                 SH = 1'b0;
             end
         6'b010000: begin //Load Byte
-                            ALU_OP = 4'b0000;
+                ALU_OP = 4'b0000;
                 RD_F = 2'b00;
                 BL = 1'b0;
                 SOH_OP = 3'b010;

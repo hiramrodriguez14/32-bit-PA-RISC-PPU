@@ -1,15 +1,15 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 `include "PA_RISC.v"
 
 module PA_RISC_tb;
 
-    // Testbench signals
+  
     reg clk;
     reg reset;
     reg LE;
     reg S;
 
-    // Instantiate the PA_RISC module
+   
     PA_RISC uut (
         .clk(clk),
         .reset(reset),
@@ -17,24 +17,24 @@ module PA_RISC_tb;
         .S(S)
     );
 
-    // Clock generation
+
     initial begin
         clk = 0;
         forever #2 clk = ~clk;
     end
 
-    // Signal generation
+
     initial begin
         reset = 1;
         LE = 1;
         S = 0;
         #3 reset = 0;
-        #45 LE = 0;
-        #12 S = 1;
-        #100 $finish;
+        #48 LE = 0;
+        #60 S = 1;
+        $finish;
     end
 
-    // Keyword decoding using ASCII codes
+    
     reg [127:0] keyword;
     always @(posedge clk) begin
         case (uut.InstructionOut[31:26])
@@ -80,11 +80,8 @@ module PA_RISC_tb;
             default: keyword = "NOP";
         endcase
 
-        // Print control signals
+    
         $display("Time=%0t | Inst=%s | PCFront=%d", $time, keyword, uut.PCFrontOut);
-        $display("CU  : SH=%b RD_F=%b BL=%b SOH_OP=%b ALU_OP=%b RAM_CTRL=%b L=%b ID_SR=%b RF_LE=%b PSW_EN=%b CO_EN=%b COMB=%b",
-            uut.IF_SH, uut.IF_RD_F, uut.IF_BL, uut.IF_SOH_OP, uut.IF_ALU_OP, uut.IF_RAM_CTRL, uut.IF_L,
-            uut.IF_ID_SR, uut.IF_RF_LE, uut.IF_PSW_EN, uut.IF_CO_EN, uut.IF_COMB);
 
         $display("EX  : BL=%b SOH_OP=%b ALU_OP=%b RAM_CTRL=%b L=%b SR=%b RF_LE=%b PSW_EN=%b CO_EN=%b COMB=%b",
             uut.CU_BL, uut.CU_SOH_OP, uut.CU_ALU_OP, uut.CU_RAM_CTRL, uut.CU_L, uut.CU_SR,
@@ -96,7 +93,7 @@ module PA_RISC_tb;
         $display("WB  : RF_LE=%b\n", uut.MEM_RF_LE_out);
     end
 
-    // Dump variables for waveform viewing
+  
     initial begin
         $dumpfile("PA_RISC_tb.vcd");
         $dumpvars(0, PA_RISC_tb);
