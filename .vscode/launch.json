@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/hiramraul11gmail.com/PA-RISC",
+      "program": "/Users/hiramraul11gmail.com/PA-RISC/build/Debug/outDebug"
+    }
+  ]
+}
