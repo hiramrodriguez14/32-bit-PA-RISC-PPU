@@ -1,7 +1,7 @@
 //Program Counter module
 //Author: Gabriel Sanchez
 
-module programCounter (
+module IAOQ_FRONT (
     input clk,
     input reset,
     input LE,                // Load Enable

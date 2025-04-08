@@ -26,8 +26,8 @@ module PA_RISC_tb;
         LE = 1;
         S = 0;
         #3 reset = 0;
-        #48 LE = 0;
-        #60 S = 1;
+        #45 LE = 0;
+        #12 S = 1;
         #20 $finish;
     end
 
@@ -50,6 +50,7 @@ module PA_RISC_tb;
                 endcase
             end
             6'b010010: keyword = "LDW";
+            6'b000000: keyword = "NOP";
             6'b010001: keyword = "LDH";
             6'b010000: keyword = "LDB";
             6'b011010: keyword = "STW";
@@ -75,21 +76,21 @@ module PA_RISC_tb;
                     default: keyword = "UNK_SHL";
                 endcase
             end
-            default: keyword = "NOP";
+            default: keyword = "xxx";
         endcase
 
         $display("Time=%0t | Inst=%s | PCFront=%d | CLK=%b", $time, keyword, uut.PCFrontOut, clk);
         $display("CU  : SH=%b RD_F=%b BL=%b SOH_OP=%b ALU_OP=%b RAM_CTRL=%b L=%b ID_SR=%b RF_LE=%b PSW_EN=%b CO_EN=%b COMB=%b",
-            uut.IF_SH, uut.IF_RD_F, uut.IF_BL, uut.IF_SOH_OP, uut.IF_ALU_OP, uut.IF_RAM_CTRL, uut.IF_L,
-            uut.IF_ID_SR, uut.IF_RF_LE, uut.IF_PSW_EN, uut.IF_CO_EN, uut.IF_COMB);
-        $display("EX  : BL=%b SOH_OP=%b ALU_OP=%b RAM_CTRL=%b L=%b SR=%b RF_LE=%b PSW_EN=%b CO_EN=%b COMB=%b",
-            uut.CU_BL, uut.CU_SOH_OP, uut.CU_ALU_OP, uut.CU_RAM_CTRL, uut.CU_L, uut.CU_SR,
-            uut.CU_RF_LE, uut.CU_PSW_EN, uut.CU_CO_EN, uut.CU_COMB);
+            uut.SH, uut.RD_F, uut.BL, uut.SOH_OP, uut.ALU_OP, uut.RAM_CTRL, uut.L,
+            uut.SR, uut.RF_LE, uut.PSW_EN, uut.CO_EN, uut.COMB);
+        $display("EX : BL=%b SOH_OP=%b ALU_OP=%b RAM_CTRL=%b L=%b SR=%b RF_LE=%b PSW_EN=%b CO_EN=%b COMB=%b",
+            uut.EX_BL, uut.EX_SOH_OP, uut.EX_ALU_OP, uut.EX_RAM_CTRL, uut.EX_L, uut.EX_SR,
+            uut.EX_RF_LE, uut.EX_PSW_EN, uut.EX_CO_EN, uut.EX_COMB);
 
-        $display("MEM : RAM_CTRL=%b L=%b RF_LE=%b",
-            uut.ID_RAM_CTRL, uut.ID_L, uut.ID_RF_LE);
+        $display("MEM in : RAM_CTRL=%b L=%b RF_LE=%b",
+            uut.MEM_RAM_CTRL_out, uut.MEM_L_out, uut.MEM_RF_LE_out);
 
-        $display("WB  : RF_LE=%b\n", uut.MEM_RF_LE_out);
+        $display("WB in : RF_LE=%b\n", uut.WB_RF_LE_out);
     end
 
     initial begin

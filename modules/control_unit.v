@@ -21,7 +21,7 @@ module control_unit(
         // Decode instruction
         case (instruction[31:26]) //opcode
             6'b000010: begin //Three-Register Arithmetic and Logical instructions opcode
-                case(instruction[11:0])//opcode 2
+                case(instruction[11:6])//opcode 2
                 6'b011000:begin//ADD 
                 ALU_OP = 4'b0000;
                 RD_F = 2'b10;
@@ -186,7 +186,7 @@ module control_unit(
                 SOH_OP = 3'b010;
                 RAM_CTRL = 4'b1011;
                 L = 1'b0;
-                ID_SR = 2'b10;
+                ID_SR = 2'b11;
                 RF_LE = 1'b0;
                 PSW_EN = 1'b0;
                 CO_EN = 1'b0;
@@ -200,7 +200,7 @@ module control_unit(
                 SOH_OP = 3'b010;
                 RAM_CTRL = 4'b0111;
                 L = 1'b0;
-                ID_SR = 2'b10;
+                ID_SR = 2'b11;
                 RF_LE = 1'b0;
                 PSW_EN = 1'b0;
                 CO_EN = 1'b0;
@@ -214,7 +214,7 @@ module control_unit(
                 SOH_OP = 3'b010;
                 RAM_CTRL = 4'b0011;
                 L = 1'b0;
-                ID_SR = 2'b10;
+                ID_SR = 2'b11;
                 RF_LE = 1'b0;
                 PSW_EN = 1'b0;
                 CO_EN = 1'b0;
@@ -236,7 +236,7 @@ module control_unit(
                 SH = 1'b0;
             end
         6'b001000: begin //Load Immediate
-                ALU_OP = 4'b0000;
+                ALU_OP = 4'b1010;
                 RD_F = 2'b01;
                 BL = 1'b0;
                 SOH_OP = 3'b011;
@@ -250,10 +250,10 @@ module control_unit(
                 SH = 1'b0;
             end
         6'b111010: begin //Branch and Link
-                ALU_OP = 4'b0000;
+                ALU_OP = 4'b1001;
                 RD_F = 2'b01;
                 BL = 1'b1;
-                SOH_OP = 3'b111;
+                SOH_OP = 3'b000;
                 RAM_CTRL = 4'b0000;
                 L = 1'b0;
                 ID_SR = 2'b00;
