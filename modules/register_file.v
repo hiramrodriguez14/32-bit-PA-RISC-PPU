@@ -2,28 +2,28 @@
 //Author: Hiram R. Rodriguez Hernandez
 
 `timescale 1s / 1s
-`include "decoder5x32.v"
-`include "mux32x5.v"
-`include "register32.v"
+`include "../modules/decoder5x32.v"
+`include "../modules/mux32x5.v"
+`include "../modules/register32.v"
 
 module register_file (
-   input [31:0] PW,      // Write data
+   input [31:0] PD,      // Write data
    input [4:0] RA,       // Read address A (Mux 1)
    input [4:0] RB,       // Read address B (Mux 2)
-   input [4:0] RW,       // Write address (Decoder)
+   input [4:0] RD,       // Write address (Decoder)
    input EN,             // Enable signal (Decoder)
    input CLK,            // Clock signal
    output [31:0] PA,     // Output register in port A
    output [31:0] PB,     // Output register in port B
-   output [31:0] decoder_out  // Output of the decoder (enables registers)
+   
 );
-
+    reg [31:0] decoder_out  // Output of the decoder (enables registers)
   
    wire [31:0] reg_file [31:0]; //32 wires of 32 bits each that will carry the data of the registers to the MUXes
  
    // Decoder to enable the write of the registers
    Decoder5x32 decoder (
-       .RW(RW),
+       .RW(RD),
        .EN(EN),
        .OUT(decoder_out)
    );
@@ -42,7 +42,7 @@ module register_file (
        for (i = 1; i < 32; i = i + 1) begin : register_array
            Register32 reg_inst (
                .Q(reg_file[i]),      // Register output will be conected to the reg_file array
-               .D(PW),               // Data to write
+               .D(PD),               // Data to write
                .LE(decoder_out[i]),  // Write enable comes from decoder
                .CLK(CLK)
            );

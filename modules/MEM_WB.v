@@ -2,7 +2,6 @@
 //Author: Alex J. Strubbe Martinez
 
 module MEM_WB(
-    input Reset,
     input clk,
    
     

@@ -3,7 +3,6 @@
 
 module ID_EX(    
     
-    input Reset,
     input  clk,
     input  [31:0] TA_in ,
     input  [31:0] A_in,
@@ -23,6 +22,7 @@ module ID_EX(
     input ID_PSW_EN_in,
     input ID_CO_EN_in,
     input [1:0] ID_COMB_in,
+    input N,
 
     // CU out signals (to EX stage)
     output reg EX_BL_out,
@@ -41,8 +41,9 @@ module ID_EX(
     output reg [31:0] RB_out,
     output reg [20:0] SOH_inst_out,
     output reg [2:0] Cond_out,
-    output reg [4:0] RD_out
-);
+    output reg [4:0] RD_out,
+    output reg N_out
+    );
 
     always @(posedge clk) begin
         if(Reset) begin
@@ -62,6 +63,7 @@ module ID_EX(
             SOH_inst_out    <= 21'b0;
             Cond_out        <= 3'b000;
             RD_out          <= 26'b0;
+            N_out           <= 1'b0;
         end
         else begin
             EX_BL_out       <= ID_BL_in;
@@ -80,6 +82,7 @@ module ID_EX(
             SOH_inst_out    <= SOH_inst_in;
             Cond_out        <= Cond_in;
             RD_out          <= RD_in;
+            N_out           <= N;
         end
     end
 endmodule

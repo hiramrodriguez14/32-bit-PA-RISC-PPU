@@ -1,6 +1,6 @@
 module DataMemory (
-    input wire clk, 
-    input wire [7:0] A,       // Dirección de memoria (8 bits para 256 bytes)
+   
+    input wire [31:0] A,       // Dirección de memoria (8 bits para 256 bytes)
     input wire [31:0] DI,     // Datos de entrada
     output reg [31:0] DO,     // Datos de salida
     input wire [1:0] Size,    // Tamaño: 00 = byte, 01 = halfword, 10 = word
@@ -48,9 +48,7 @@ module DataMemory (
                 default: DO = 32'b0;
             endcase
         end
-    end
 
-    always @(posedge clk) begin
         if (RW == 1 && E == 1) begin // Escritura habilitada
             case (Size)
                 2'b00: Mem[A] <= DI[7:0]; // Escribir un byte

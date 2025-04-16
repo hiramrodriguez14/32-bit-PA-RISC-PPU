@@ -29,7 +29,6 @@ module register_file_tb;
         .CLK(CLK),
         .PA(PA),
         .PB(PB),
-        .decoder_out(decoder_out)
     );
 
    
@@ -90,8 +89,8 @@ module register_file_tb;
     initial begin
         $display("  Time  |  CLK    |   PW           |  RW    |  RA   |  RB     |  PA            |  PB            |  decoder_out  ");
         $display("--------+---------+----------------+--------+--------+---------+---------------+----------------+--------------------------");
-        $monitor("Time = %0t , CLK = %d, PW = %d, RW = %d, RA = %d, RB = %d, PA = %d, PB = %d, decoder_out = %b",
-        $time, CLK, PW, RW, RA, RB, PA, PB, decoder_out);
+        $monitor("Time = %0t , CLK = %d, PW = %d, RW = %d, RA = %d, RB = %d, PA = %d, PB = %d",
+        $time, CLK, PW, RW, RA, RB, PA, PB);
 
     end
 

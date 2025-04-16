@@ -3,7 +3,6 @@
 
 module EX_MEM(
 
-    input Reset,
     input  clk,
 
     input [31:0] EX_RB_in,
