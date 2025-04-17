@@ -7,12 +7,13 @@
 module register_file_tb;
 
    
-    reg [31:0] PW;      // Write data
-    reg [4:0] RA;       // Read address A
-    reg [4:0] RB;       // Read address B
-    reg [4:0] RW;       // Write address
-    reg EN;             // Enable signal
-    reg CLK;            // Clock signal
+ reg [31:0] PW;
+reg [4:0] RA;
+reg [4:0] RB;
+reg [4:0] RW;
+reg EN;
+reg CLK;
+
 
     // Register file outputs
     wire [31:0] PA;     // Output register in port A
@@ -90,7 +91,7 @@ module register_file_tb;
         $display("  Time  |  CLK    |   PW           |  RW    |  RA   |  RB     |  PA            |  PB            |  R1  ");
         $display("--------+---------+----------------+--------+--------+---------+---------------+----------------+--------------------------");
         $monitor("Time = %0t , CLK = %d, PW = %d, RW = %d, RA = %d, RB = %d, PA = %d, PB = %d, R1 = %d ",
-        $time, CLK, PW, RW, RA, RB, PA, PB, rf.reg_file[1]);
+        $time, CLK, PW, RW, RA, RB, PA, PB, rf.reg_file[0]);
 
     end
 

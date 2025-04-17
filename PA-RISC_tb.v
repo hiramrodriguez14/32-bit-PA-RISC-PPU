@@ -85,7 +85,7 @@ module PA_RISC_tb;
         $display("WB in : RF_LE=%b\n", uut.WB_RF_LE_out);
 
         
-        $display("VALIDATION LINE: PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d | PD=%0d | RD=%0d | ALU_OUT=%0d | SOH=%0d",
+        $display("VALIDATION LINE: PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d | PD=%0d | RD=%0d | ALU_OUT=%0d | SOH=%0d | A_ALU=%0d | PA=%0d | RA=%0d | AS=%0d",
             uut.PCFrontOut,
             uut.RF.reg_file[1],
             uut.RF.reg_file[2],
@@ -95,7 +95,11 @@ module PA_RISC_tb;
             uut.WB_PD_out,
             uut.WB_RD_out,
             uut.ALU_Out,
-            uut.EX_SOH_N);
+            uut.EX_SOH_N,
+            uut.A_out,
+            uut.ID_PA_OUT,
+            uut.InstructionOut[25:21],
+            uut.AS_OUT);
     end
 
     initial begin

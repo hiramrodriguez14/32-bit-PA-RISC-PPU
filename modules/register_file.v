@@ -15,8 +15,8 @@ module register_file (
    input [4:0] RD,       // Write address (Decoder)
    input EN,             // Enable signal (Decoder)
    input CLK,            // Clock signal
-   output [31:0] PA,     // Output register in port A
-   output [31:0] PB     // Output register in port B
+   output wire [31:0] PA,     // Output register in port A
+   output wire [31:0] PB     // Output register in port B
    
 );
     wire [31:0] decoder_out;  // Output of the decoder (enables registers)
