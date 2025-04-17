@@ -2,7 +2,7 @@
 //Author: Hiram R. Rodriguez Hernandez
 
 `timescale 1ns / 1ns
-`include "register_file.v"
+`include "../modules/register_file.v"
 
 module register_file_tb;
 
@@ -21,14 +21,14 @@ module register_file_tb;
 
 
     register_file rf (
-        .PW(PW),
+        .PD(PW),
         .RA(RA),
         .RB(RB),
-        .RW(RW),
+        .RD(RW),
         .EN(EN),
         .CLK(CLK),
         .PA(PA),
-        .PB(PB),
+        .PB(PB)
     );
 
    
@@ -87,10 +87,10 @@ module register_file_tb;
 
 
     initial begin
-        $display("  Time  |  CLK    |   PW           |  RW    |  RA   |  RB     |  PA            |  PB            |  decoder_out  ");
+        $display("  Time  |  CLK    |   PW           |  RW    |  RA   |  RB     |  PA            |  PB            |  R1  ");
         $display("--------+---------+----------------+--------+--------+---------+---------------+----------------+--------------------------");
-        $monitor("Time = %0t , CLK = %d, PW = %d, RW = %d, RA = %d, RB = %d, PA = %d, PB = %d",
-        $time, CLK, PW, RW, RA, RB, PA, PB);
+        $monitor("Time = %0t , CLK = %d, PW = %d, RW = %d, RA = %d, RB = %d, PA = %d, PB = %d, R1 = %d ",
+        $time, CLK, PW, RW, RA, RB, PA, PB, rf.reg_file[1]);
 
     end
 

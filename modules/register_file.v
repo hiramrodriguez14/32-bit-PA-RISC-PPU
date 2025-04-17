@@ -2,9 +2,11 @@
 //Author: Hiram R. Rodriguez Hernandez
 
 `timescale 1s / 1s
-`include "./modules/decoder5x32.v"
-`include "./modules/mux32x5.v"
-`include "./modules/register32.v"
+`include "modules/decoder5x32.v"
+`include "modules/mux32x5.v"
+`include "modules/register32.v"
+
+
 
 module register_file (
    input [31:0] PD,      // Write data

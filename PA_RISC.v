@@ -28,7 +28,8 @@
 
 
 module PA_RISC(
-    input clk
+    input clk,
+    input reset
 );
 
 // ------------------------
@@ -176,7 +177,7 @@ IF_ID IF_ID(
     .Inst_in(Instruction),
     .PC_Front(PCFrontOut),
     .LE(LE),
-    .Reset(EX_J),
+    .Reset(EX_J || reset),
     .clk(clk),
     .Inst_out(InstructionOut),
     .PC_Front_out(ID_IAOQ_FRONT)
@@ -238,7 +239,7 @@ MUX2x1_5bits MUX(
     .Y(ID_RB_IN)
 );
 
-MUX4x1_5bits MUX2(
+MUX4x1_5bits MUXRD(
     .A(InstructionOut[20:16]),
     .B(InstructionOut[25:21]),
     .C(InstructionOut[4:0]),
@@ -283,7 +284,7 @@ MUX2x1_32bits MUXBL(
 );
 
 ID_EX ID_EX(
-    .Reset(1'b0),
+    .Reset(reset),
     .clk(clk),
     .TA_in(TA_OUT),
     .A_in(Ain),
@@ -291,7 +292,7 @@ ID_EX ID_EX(
     .SOH_inst_in(Instruction[20:0]),
     .Cond_in(Instruction[15:13]),
     //Signals from mux
-    .RD_in(RD),
+    .RD_in(ID_RD_OUT),
     .ID_BL_in(ID_BL),
     .ID_SOH_OP_in(ID_SOH_OP),
     .ID_ALU_OP_in(ID_ALU_OP),
@@ -346,6 +347,7 @@ MUX2x1_1bits mux1x2(
 
 PSW PSW(
     .clk(clk),
+    .Reset(reset),
     .PSW_EN(EX_PSW_EN),
     .C_B(EX_Flags[1]),
     .Co(EX_Co)
@@ -378,7 +380,7 @@ DHDU DHDU(
 );
 
 EX_MEM EX_MEM(
-    .Reset(1'b0),
+    .Reset(reset),
     .clk(clk),
     .EX_RB_in(RB_out),
     .EX_ALU_OUT_in(ALU_Out),
@@ -411,7 +413,7 @@ MUX2x1_32bits MUXMEM(
 );
 
 MEM_WB MEM_WB(
-    .Reset(1'b0),
+    .Reset(reset),
     .clk(clk),
     .MEM_PD_in(MEM_PD_OUT),
     .MEM_RD_in(MEM_RD_out),
