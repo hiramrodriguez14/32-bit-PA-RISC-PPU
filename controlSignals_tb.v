@@ -1,17 +1,19 @@
-`timescale 1s / 1s
+`timescale 1ns / 1ns
 `include "PA_RISC.v"
 
 module PA_RISC_tb;
 
     reg clk;
     reg reset;
+    reg LE;
+    reg S;
 
     PA_RISC uut (
         .clk(clk),
         .reset(reset)
     );
 
-    // Clock toggles every 2ns → full period = 4ns
+    // Clock toggles every 1ns → full period = 2ns
     initial begin
         clk = 0;
         forever #2 clk = ~clk;
@@ -20,12 +22,13 @@ module PA_RISC_tb;
     initial begin
         reset = 1;
         #3 reset = 0;
-        #100 $finish; // Aumenté tiempo para permitir ejecución larga si es necesario
+        
+        #20 $finish;
     end
 
     reg [127:0] keyword;
 
-    // Display block every 1ns
+    // This block prints info every 1ns
     always #1 begin
         case (uut.InstructionOut[31:26])
             6'b000010: begin
@@ -71,7 +74,7 @@ module PA_RISC_tb;
             default: keyword = "xxx";
         endcase
 
-        $display("\nTime=%0t | Inst=%s | PCFront=%d | CLK=%b", $time, keyword, uut.ID_IAOQ_FRONT, clk);
+        $display("Time=%0t | Inst=%s | PCFront=%d | CLK=%b", $time, keyword, uut.PCFrontOut, clk);
         $display("CU  : SH=%b RD_F=%b BL=%b SOH_OP=%b ALU_OP=%b RAM_CTRL=%b L=%b ID_SR=%b RF_LE=%b PSW_EN=%b CO_EN=%b COMB=%b",
             uut.SH, uut.RD_F, uut.BL, uut.SOH_OP, uut.ALU_OP, uut.RAM_CTRL, uut.L,
             uut.SR, uut.RF_LE, uut.PSW_EN, uut.CO_EN, uut.COMB);
@@ -79,27 +82,10 @@ module PA_RISC_tb;
             uut.EX_BL, uut.EX_SOH_OP, uut.EX_ALU_OP, uut.EX_RAM_CTRL, uut.EX_L, uut.EX_SR,
             uut.EX_RF_LE, uut.EX_PSW_EN, uut.EX_CO_EN, uut.EX_COMB);
 
-        $display("MEM: RAM_CTRL=%b L=%b RF_LE=%b",
+        $display("MEM in : RAM_CTRL=%b L=%b RF_LE=%b",
             uut.MEM_RAM_CTRL_out, uut.MEM_L_out, uut.MEM_RF_LE_out);
 
-        $display("WB: RF_LE=%b\n", uut.WB_RF_LE_out);
-
-        
-        $display("VALIDATION LINE: \nTime=%0t | PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d | PD=%0d | RD=%0d | ALU_OUT=%0d |SOH_in=%0d| SOH_out=%0d | Intruction_IN=%0b | Instruction_OUT=%0b",
-            $time,
-            uut.ID_IAOQ_FRONT,
-            uut.RF.reg_file[1],
-            uut.RF.reg_file[2],
-            uut.RF.reg_file[3],
-            uut.RF.reg_file[5],
-            uut.RF.reg_file[6],
-            uut.WB_PD_out,
-            uut.WB_RD_out,
-            uut.ALU_Out,
-            uut.SOH_inst_out,
-            uut.EX_SOH_N,
-            uut.Instruction,
-            uut.InstructionOut);
+        $display("WB in : RF_LE=%b\n", uut.WB_RF_LE_out);
     end
 
     initial begin

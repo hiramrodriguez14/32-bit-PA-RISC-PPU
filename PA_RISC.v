@@ -130,7 +130,7 @@ wire WB_RF_LE_out;
 //DHDU Wires
 wire [1:0] BS_OUT;
 wire [1:0] AS_OUT;
-wire LE;
+wire LE = 1'b1;
 wire NOP;
 
 
@@ -289,7 +289,7 @@ ID_EX ID_EX(
     .TA_in(TA_OUT),
     .A_in(Ain),
     .RB_in(ID_MUX_PB_OUT),
-    .SOH_inst_in(Instruction[20:0]),
+    .SOH_inst_in(InstructionOut[20:0]),
     .Cond_in(Instruction[15:13]),
     //Signals from mux
     .RD_in(ID_RD_OUT),

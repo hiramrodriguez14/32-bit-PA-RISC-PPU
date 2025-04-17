@@ -12,7 +12,7 @@ module IF_ID(
     output reg [31:0] PC_Front_out
 );
 
-    always @(posedge clk) begin
+    always @(posedge clk or posedge Reset) begin
         if(Reset) begin
             Inst_out <= 32'b0;
             PC_Front_out <= 32'b0;
