@@ -3,13 +3,13 @@
 
 module IF_ID(
     input  [31:0] Inst_in ,
-    input  [7:0] PC_Front,
+    input  [31:0] PC_Front,
     input  LE,
     input  Reset,
     input  clk,
 
     output reg [31:0] Inst_out,
-    output reg [7:0] PC_Front_out
+    output reg [31:0] PC_Front_out
 );
 
     always @(posedge clk) begin

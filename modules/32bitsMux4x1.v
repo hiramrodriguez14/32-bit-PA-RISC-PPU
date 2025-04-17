@@ -12,3 +12,4 @@ module MUX4x1_32bits(
             default: Y = 32'b0; // Default case (unused ops)
         endcase
     end
+endmodule

@@ -12,3 +12,4 @@ module MUX4x1_5bits(
             default: Y = 5'b0; // Default case (unused ops)
         endcase
     end
+endmodule

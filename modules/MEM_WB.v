@@ -8,7 +8,7 @@ module MEM_WB(
     input [31:0] MEM_PD_in,
     input [4:0] MEM_RD_in,
     input MEM_RF_LE_in,
-
+    input Reset,
     output reg [31:0] WB_PD_out,
     output reg [4:0] WB_RD_out,
     output reg WB_RF_LE_out

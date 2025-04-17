@@ -4,7 +4,7 @@
 module EX_MEM(
 
     input  clk,
-
+    input Reset,
     input [31:0] EX_RB_in,
     input [31:0] EX_ALU_OUT_in,
     input [4:0] EX_RD_in,

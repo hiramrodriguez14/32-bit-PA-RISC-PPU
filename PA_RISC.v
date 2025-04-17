@@ -15,6 +15,7 @@
 `include "modules/5bitsMux4x1.v"
 `include "modules/32bitsMux2x1.v"
 `include "modules/32bitsMux4x1.v"
+`include "modules/8bitsMux2x1.v"
 `include "modules/mux1x2.v"
 `include "modules/PSW.v"
 `include "modules/DHDU.v"
@@ -27,8 +28,7 @@
 
 
 module PA_RISC(
-    input clk,
-    input reset,
+    input clk
 );
 
 // ------------------------
@@ -36,10 +36,10 @@ module PA_RISC(
 // ------------------------
 
 //IF wires
-wire [7:0] PCBackIn;
-wire [7:0] PCBackOut;
-wire [7:0] PCFrontOut;
-wire [7:0] PCFrontIn;
+wire [31:0] PCBackIn;
+wire [31:0] PCBackOut;
+wire [31:0] PCFrontOut;
+wire [31:0] PCFrontIn;
 wire [31:0] Instruction;
 wire [31:0] InstructionOut; 
 wire [4:0] RD = Instruction [4:0];
@@ -60,7 +60,7 @@ wire CO_EN;
 wire [1:0] COMB;
 
 // ID and MUX outputs (post-control unit)
-wire [7:0] ID_IAOQ_FRONT;
+wire [31:0] ID_IAOQ_FRONT;
 wire ID_BL;
 wire [2:0] ID_SOH_OP;
 wire [3:0] ID_ALU_OP;
@@ -77,6 +77,7 @@ wire [31:0] ID_PA_OUT;
 wire [31:0] ID_PB_OUT;
 wire [31:0] ID_MUX_PA_OUT;
 wire [31:0] ID_MUX_PB_OUT;
+wire [31:0] TA_OUT;
 
 
 
@@ -93,7 +94,7 @@ wire EX_PSW_EN;
 wire EX_CO_EN;
 wire [1:0] EX_COMB;
 wire [31:0] Ain; 
-wire [4:0] EX_RD_Out;
+wire [4:0] EX_RD_out;
 wire [31:0] A_out;
 wire [31:0] RB_out;
 wire [31:0] TA_out;
@@ -107,7 +108,7 @@ wire PSW_N_out;
 wire EX_J;
 wire EX_Co;
 wire EX_Ci;
-wire EX_SOH_N;
+wire [31:0] EX_SOH_N;
 
 
 // MEM wires
@@ -126,11 +127,11 @@ wire [4:0] WB_RD_out;
 wire WB_RF_LE_out;
 
 //DHDU Wires
-wire BS_OUT;
-wire AS_OUT;
+wire [1:0] BS_OUT;
+wire [1:0] AS_OUT;
 wire LE;
 wire NOP;
-wire LE;
+
 
 
 // ------------------------
@@ -150,7 +151,7 @@ IAOQ_BACK IAOQ_BACK(
     .D(PCBackIn)
 );
 
-MUX2x1_8bits IF_MUX(
+MUX2x1_32bits IF_MUX(
     .A(PCBackOut),
     .B(TA_out),
     .S(EX_J),
@@ -166,7 +167,7 @@ IAOQ_FRONT IAOQ_FRONT(
 );
 
 instruction_memory im(
-    .A(PCFrontOut),
+    .A(PCFrontOut[7:0]),
     .I(Instruction)
 );
 
@@ -232,16 +233,15 @@ TAG TAG(
 
 MUX2x1_5bits MUX(
     .A(InstructionOut[20:16]),
-    .B(InstructionOut[21:25]),
+    .B(InstructionOut[25:21]),
     .S(SH),
     .Y(ID_RB_IN)
 );
 
-Mux4x1_5bits MUX2(
+MUX4x1_5bits MUX2(
     .A(InstructionOut[20:16]),
     .B(InstructionOut[25:21]),
     .C(InstructionOut[4:0]),
-    .D(5'b0),
     .S(RD_F),
     .Y(ID_RD_OUT)
 );
@@ -254,28 +254,28 @@ register_file RF(
     .EN(WB_RF_LE_out),
     .CLK(clk),
     .PA(ID_PA_OUT),
-    .PB(ID_PB_OUT),
+    .PB(ID_PB_OUT)
 );
 
-Mux4x1_32bits MUXPA(
+MUX4x1_32bits MUXPA(
     .A(ID_PA_OUT),
     .B(ALU_Out),
     .C(MEM_PD_OUT),
-    .D(WB_PD_OUT),
+    .D(WB_PD_out),
     .S(AS_OUT),
     .Y(ID_MUX_PA_OUT)
 );
 
-Mux4x1_32bits MUXPB(
+MUX4x1_32bits MUXPB(
     .A(ID_PB_OUT),
     .B(ALU_Out),
     .C(MEM_PD_OUT),
-    .D(WB_PD_OUT),
+    .D(WB_PD_out),
     .S(BS_OUT),
     .Y(ID_MUX_PB_OUT)
 );
 
-Mux2x1_32bits MUXBL(
+MUX2x1_32bits MUXBL(
     .A(ID_MUX_PA_OUT),
     .B(ID_IAOQ_FRONT),
     .S(BL),
@@ -283,7 +283,7 @@ Mux2x1_32bits MUXBL(
 );
 
 ID_EX ID_EX(
-    .Reset(reset),
+    .Reset(1'b0),
     .clk(clk),
     .TA_in(TA_OUT),
     .A_in(Ain),
@@ -319,7 +319,7 @@ ID_EX ID_EX(
     .RB_out(RB_out),
     .SOH_inst_out(SOH_inst_out),
     .Cond_out(Cond_out),
-    .RD_out(EX_RD_Out),
+    .RD_out(EX_RD_out),
     .N_out(EX_N_in)
 );
 
@@ -332,18 +332,18 @@ ALU ALU(
     .Flags(EX_Flags)
 );
 
-SOH SOH(
+operand_handler SOH(
     .RB(RB_out),
     .I(SOH_inst_out),
     .S(EX_SOH_OP),
     .N(EX_SOH_N)
 );
 
-mux1x2 mux1x2(
-    .in0(1'b0),
-    .in1(EX_Co),
-    .sel(EX_CO_EN),
-    .out(EX_Ci)
+MUX2x1_1bits mux1x2(
+    .A(1'b0),
+    .B(EX_Co),
+    .S(EX_CO_EN),
+    .Y(EX_Ci)
 );
 
 PSW PSW(
@@ -384,11 +384,11 @@ DHDU DHDU(
 );
 
 EX_MEM EX_MEM(
-    .Reset(reset),
+    .Reset(EX_N_out),
     .clk(clk),
     .EX_RB_in(RB_out),
     .EX_ALU_OUT_in(ALU_Out),
-    .EX_RD_in(EX_RD_Out),
+    .EX_RD_in(EX_RD_out),
     .EX_RAM_CTRL_in(EX_RAM_CTRL),
     .EX_L_in(EX_L),
     .EX_RF_LE_in(EX_RF_LE),
@@ -400,8 +400,8 @@ EX_MEM EX_MEM(
     .MEM_RF_LE_out(MEM_RF_LE_out)
 );
 
-Datamemory datamemory(
-    .A(MEM_ALU_OUT_out[7:0]),
+DataMemory datamemory(
+    .A(MEM_ALU_OUT_out),
     .DI(MEM_RB_out),
     .DO(MEM_DATA_OUT),
     .Size(MEM_RAM_CTRL_out[3:2]),
@@ -417,7 +417,7 @@ MUX2x1_32bits MUXMEM(
 );
 
 MEM_WB MEM_WB(
-    .Reset(reset),
+    .Reset(1'b0),
     .clk(clk),
     .MEM_PD_in(MEM_PD_OUT),
     .MEM_RD_in(MEM_RD_out),

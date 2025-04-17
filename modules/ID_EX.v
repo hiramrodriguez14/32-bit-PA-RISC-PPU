@@ -2,7 +2,7 @@
 //Author: Alex J. Strubbe Martinez
 
 module ID_EX(    
-    
+    input Reset,
     input  clk,
     input  [31:0] TA_in ,
     input  [31:0] A_in,

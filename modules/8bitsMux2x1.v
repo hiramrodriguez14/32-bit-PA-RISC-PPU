@@ -11,3 +11,4 @@ module MUX2x1_8bits(
             default: Y = 7'b0000000; // Default case (unused ops)
         endcase
     end 
+endmodule

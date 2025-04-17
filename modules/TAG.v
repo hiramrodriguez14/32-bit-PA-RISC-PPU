@@ -1,26 +1,27 @@
-
-
 module TAG(
     input [20:0] Instruction,
-    input [7:0] IAOQ_FRONT,
+    input [31:0] IAOQ_FRONT,
     input BL,
     input COMB,
-    output reg [7:0] TA
+    output reg [31:0] TA
 );
 
-always @(*) begin
-    if (BL) begin
-        // Branch and Link: w2 = Instruction[12:2], w1 = Instruction[20:16], w = Instruction[0]
-        // IAOQBACK <- IAOQFRONT + 8 + 4*signext(w1, w2, w)
-        // Sign-extend w2 (11 bits) and w1 (5 bits) to 16 bits
-        TA = IAOQ_FRONT + 8'b00001000 + 4*({{11{Instruction[0]}}, Instruction[20:16], Instruction[12:2], Instruction[0]});
+    wire signed [31:0] offset_bl;
+    wire signed [31:0] offset_comb;
+
+    // Branch and Link offset: 16-bit sign-extended immediate from w2|w1|w
+    assign offset_bl = {{16{Instruction[20]}}, Instruction[20:16], Instruction[12:2], Instruction[0]};
+
+    // Compare and Branch offset: 14-bit sign-extended immediate from w1|w
+    assign offset_comb = {{18{Instruction[12]}}, Instruction[12:2], Instruction[0]};
+
+    always @(*) begin
+        if (BL)
+            TA = IAOQ_FRONT + 32'd8 + (offset_bl << 2); // shift-left by 2 = *4
+        else if (COMB)
+            TA = IAOQ_FRONT + 32'd8 + (offset_comb << 2);
+        else
+            TA = 32'd0;
     end
-    else if (COMB) begin
-        // Compare and Branch: w1 = Instruction[12:2], w = Instruction[0], no w2
-        // IAOQBACK <- IAOQFRONT + 8 + 4*signext(w1, w)
-        // Sign-extend w1 (11 bits) and w (1 bit) to 16 bits
-        TA = IAOQ_FRONT + 8'b00001000 + 4*({{18{Instruction[0]}}, Instruction[12:2], Instruction[0]});
-    end
-end
 
 endmodule

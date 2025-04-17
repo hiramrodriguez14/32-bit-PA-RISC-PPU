@@ -1,10 +1,14 @@
-module mux2to1 (
-    input  wire  in0,
-    input  wire  in1,
-    input  wire  sel,
-    output wire  out
+module MUX2x1_1bits(
+
+    input A, B, // 5-bit inputs A and B
+    input S,         // 1-bit selector
+    output reg Y // 5-bit output Y
 );
-
-    assign out = (sel == 1'b0) ? in0 : in1;
-
+    always @(*) begin
+        case (S)
+            1'b0: Y = A; // If S is 0, output A
+            1'b1: Y = B; // If S is 1, output B
+            default: Y = 1'b0; // Default case (unused ops)
+        endcase
+    end 
 endmodule
