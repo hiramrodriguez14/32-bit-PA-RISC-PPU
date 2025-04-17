@@ -2,11 +2,9 @@ module CH (
     input wire BL,
     input wire COMB,
     input wire COMB_TF,
-    input wire n_in,
     input wire [2:0] C,
     input wire [3:0] ACC, // {V, C, N, Z}
-    output reg J,
-    output reg n_out
+    output reg J
 );
 
 // Flags del ACC
@@ -45,7 +43,6 @@ always @(*) begin
     end else begin
         J = 0;
     end
-    n_out = J & n_in;
 end
 
 

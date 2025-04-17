@@ -15,7 +15,7 @@ module DataMemory (
     reg [7:0] temp;
 
     initial begin
-        file = $fopen("file_precarga_fase_I.txt", "r");
+        file = $fopen("codigo_validacion_PA-RISC.txt", "r");
         if (file == 0) begin
             $display("ERROR: No se pudo abrir file_precarga_fase_I.txt");
             $finish;

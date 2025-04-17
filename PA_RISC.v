@@ -290,7 +290,6 @@ ID_EX ID_EX(
     .RB_in(ID_MUX_PB_OUT),
     .SOH_inst_in(Instruction[20:0]),
     .Cond_in(Instruction[15:13]),
-    .N(InstructionOut[1]),
     //Signals from mux
     .RD_in(RD),
     .ID_BL_in(ID_BL),
@@ -319,8 +318,7 @@ ID_EX ID_EX(
     .RB_out(RB_out),
     .SOH_inst_out(SOH_inst_out),
     .Cond_out(Cond_out),
-    .RD_out(EX_RD_out),
-    .N_out(EX_N_in)
+    .RD_out(EX_RD_out)
 );
 
 ALU ALU(
@@ -350,20 +348,16 @@ PSW PSW(
     .clk(clk),
     .PSW_EN(EX_PSW_EN),
     .C_B(EX_Flags[1]),
-    .N_in(EX_N_out),
-    .Co(EX_Co),
-    .N_out(PSW_N_out)
+    .Co(EX_Co)
 );
 
 CH CH(
     .BL(EX_BL),
     .COMB(EX_COMB[1]),
     .COMB_TF(EX_COMB[0]),
-    .n_in(EX_N_in),
     .C(Cond_out),
     .ACC(EX_Flags), 
-    .J(EX_J),
-    .n_out(EX_N_out)
+    .J(EX_J)
 );
 
 DHDU DHDU(
@@ -384,7 +378,7 @@ DHDU DHDU(
 );
 
 EX_MEM EX_MEM(
-    .Reset(EX_N_out),
+    .Reset(1'b0),
     .clk(clk),
     .EX_RB_in(RB_out),
     .EX_ALU_OUT_in(ALU_Out),
