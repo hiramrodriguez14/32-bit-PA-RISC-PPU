@@ -290,7 +290,7 @@ ID_EX ID_EX(
     .A_in(Ain),
     .RB_in(ID_MUX_PB_OUT),
     .SOH_inst_in(InstructionOut[20:0]),
-    .Cond_in(Instruction[15:13]),
+    .Cond_in(InstructionOut[15:13]),
     //Signals from mux
     .RD_in(ID_RD_OUT),
     .ID_BL_in(ID_BL),

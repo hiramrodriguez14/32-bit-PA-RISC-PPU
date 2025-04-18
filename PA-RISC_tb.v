@@ -20,7 +20,7 @@ module PA_RISC_tb;
     initial begin
         reset = 1;
         #3 reset = 0;
-        #100 $finish; // Aumenté tiempo para permitir ejecución larga si es necesario
+        #60 $finish; // Aumenté tiempo para permitir ejecución larga si es necesario
     end
 
     reg [127:0] keyword;
@@ -85,7 +85,7 @@ module PA_RISC_tb;
         $display("WB: RF_LE=%b\n", uut.WB_RF_LE_out);
 
         
-        $display("VALIDATION LINE: \nTime=%0t | PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d | PD=%0d | RD=%0d | ALU_OUT=%0d |SOH_in=%0d| SOH_out=%0d | Intruction_IN=%0b | Instruction_OUT=%0b",
+        $display("VALIDATION LINE: \nTime=%0t | PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d | PD=%0d | RD=%0d | ALU_OUT=%0d |SOH_in=%0d| SOH_out=%0d | Intruction_IN=%0b | Instruction_OUT=%0b | TA_OUT=%0d | Flags=%0b, | J=%d0 | TA_IN = %0d | COND=%0b ",
             $time,
             uut.ID_IAOQ_FRONT,
             uut.RF.reg_file[1],
@@ -99,7 +99,13 @@ module PA_RISC_tb;
             uut.SOH_inst_out,
             uut.EX_SOH_N,
             uut.Instruction,
-            uut.InstructionOut);
+            uut.InstructionOut,
+            uut.TA_OUT,
+            uut.EX_Flags,
+            uut.EX_J,
+            uut.TA_out,
+            uut.Cond_out
+            );
     end
 
     initial begin
