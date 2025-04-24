@@ -24,16 +24,26 @@ module PA_RISC_tb;
         #3 reset = 0;
     end
 
+  
+
     // Monitor principal: PCFront y registros GR1, GR2, GR3, GR5, GR6
     initial begin
-        $monitor("Time=%0t | PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d",
+        $monitor("Time=%t | PCFront=%d | GR1=%d | GR2=%d | GR3=%d | GR5=%d | GR6=%d | ALU=%b | ctrl=%b | PD=%b | MEM_data=%b | MEM[80]=%b | MEM[81]=%b | MEM[82]=%b | MEM[83]=%b",
             $time,
-            uut.ID_IAOQ_FRONT,
+            uut.PCFrontOut,
             uut.RF.reg_file[1],
             uut.RF.reg_file[2],
             uut.RF.reg_file[3],
             uut.RF.reg_file[5],
-            uut.RF.reg_file[6]
+            uut.RF.reg_file[6],
+            uut.MEM_ALU_OUT_out,
+            uut.MEM_L_out,
+            uut.MEM_PD_OUT,
+            uut.MEM_DATA_OUT,
+            uut.datamemory.Mem[80],
+            uut.datamemory.Mem[81],
+            uut.datamemory.Mem[82],
+            uut.datamemory.Mem[83]
         );
     end
 
