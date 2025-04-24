@@ -26,9 +26,25 @@ module PA_RISC_tb;
 
     // Monitor principal: PCFront y registros GR1, GR2, GR3, GR5, GR6
     initial begin
-        $monitor("Time=%0t | PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d",
+        // $monitor("Time=%0t | PCFront=%0d | MUX PA=%b PA=%b ALU=%b MEM=%b WB=%b ctrl=%b| GR1=%0b | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d",
+        //     $time,
+        //     uut.PCFrontOut,
+        //     uut.ID_MUX_PA_OUT,
+        //     uut.ID_PA_OUT,
+        //     uut.ALU_Out,
+        //     uut.MEM_PD_OUT,
+        //     uut.WB_PD_out,
+        //     uut.AS_OUT,
+        //     uut.RF.reg_file[1],
+        //     uut.RF.reg_file[2],
+        //     uut.RF.reg_file[3],
+        //     uut.RF.reg_file[5],
+        //     uut.RF.reg_file[6]
+        // );
+            $monitor("Time=%0t | PCFrontin=%d PCFrontout=%d |  GR1=%b | GR2=%d | GR3=%d | GR5=%d | GR6=%d",
             $time,
-            uut.ID_IAOQ_FRONT,
+            uut.PCFrontIn,
+            uut.PCFrontOut,
             uut.RF.reg_file[1],
             uut.RF.reg_file[2],
             uut.RF.reg_file[3],

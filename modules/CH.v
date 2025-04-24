@@ -18,20 +18,18 @@ reg cond;
 // Evaluación de condición
 always @(*) begin
     case (C)
-        3'b000: cond = 1'b0;             // Never
-        3'b001: cond = ACC[3];                // Equal
-        3'b010: cond = ACC[2] ^ ACC[0];            // Less than (signed)
+        3'b000: cond = 1'b0;                        // Never
+        3'b001: cond = ACC[3];                      // Equal
+        3'b010: cond = ACC[2];             // Less than (signed)
         3'b011: cond = (ACC[2] ^ ACC[0]) | ACC[3];      // Less than or equal (signed)
-        3'b100: cond = ACC[1];           // Less than (unsigned)
+        3'b100: cond = ACC[1];                      // Less than (unsigned)
         3'b101: cond = ACC[1] | ACC[3];       // Less than or equal (unsigned)
         3'b110: cond = ACC[0];                // Overflow
         3'b111: cond = ~ACC[3];               // Odd → Out ≠ 0 → Z = 0
         default: cond = 1'b0;
     endcase
-end
-
-// Lógica de salto
-always @(*) begin
+    
+    // Lógica de salto
     if (BL) begin
         J = 1;
     end else if (COMB) begin
@@ -43,8 +41,7 @@ always @(*) begin
     end else begin
         J = 0;
     end
+    //$display("********** %b , %b, %b", cond, ACC, J);
 end
-
-
 
 endmodule
