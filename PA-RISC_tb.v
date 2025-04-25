@@ -85,18 +85,20 @@ module PA_RISC_tb;
         $display("WB in : RF_LE=%b\n", uut.WB_RF_LE_out);
 
         $display("ALU OPERANDS: A= %h | B= %h", uut.Ain, uut.EX_SOH_N);
-        $monitor("VALIDATION LINE: PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d | PD=%0d | RD=%0d | ALU_OUT=%0d | ALU_FLAGS=%b | SOH=%0d",
+        $monitor("VALIDATION LINE:\nTime=%0t| PCFront=%0d | GR1=%0d | GR2=%0d | GR3=%0d | GR5=%0d | GR6=%0d |SOH_N=%0d | A_out=%0d | ALU_out=%0d | PA=%0d | SOH_IN=%0b",
+            $time,
             uut.PCFrontOut,
             uut.RF.reg_file[1],
             uut.RF.reg_file[2],
             uut.RF.reg_file[3],
             uut.RF.reg_file[5],
             uut.RF.reg_file[6],
-            uut.WB_PD_out,
-            uut.WB_RD_out,
-            uut.ALU_Out,
-            uut.EX_Flags,
-            uut.EX_SOH_N);
+           uut.EX_SOH_N,
+           uut.A_out,
+           uut.ALU_Out,
+           uut.ID_PA_OUT,
+           uut.SOH_inst_out
+        );
     end
 
     initial begin
