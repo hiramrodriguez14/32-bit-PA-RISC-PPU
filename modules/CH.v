@@ -27,18 +27,20 @@ always @(*) begin
         3'b111: cond = ~ACC[3];                     // Odd → Out ≠ 0 → Z = 0
         default: cond = 1'b0;
     endcase
-end
-    
+   
     // Lógica de salto
     if (BL) begin
         J = 1;
-    end else if (COMB) begin
+    end 
+    else if (COMB) begin
         if (COMB_TF == 1'b0) begin // Compare and branch true
             J = cond ? 1'b1 : 1'b0;
-        end else begin            // Compare and branch false
+        end 
+        else begin            // Compare and branch false
             J = cond ? 1'b0 : 1'b1;
         end
-    end else begin
+    end 
+    else begin
         J = 0;
     end
     //$display("********** %b , %b, %b", cond, ACC, J);
