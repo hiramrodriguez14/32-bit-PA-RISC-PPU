@@ -85,22 +85,10 @@ end
             default: keyword = "xxx";
         endcase
 
-        $display("\nTime=%0t | Inst=%s | PCFront=%d | CLK=%b", $time, keyword, uut.PCFrontOut, clk);
-        $display("CU  : SH=%b RD_F=%b BL=%b SOH_OP=%b ALU_OP=%b RAM_CTRL=%b L=%b ID_SR=%b RF_LE=%b PSW_EN=%b CO_EN=%b COMB=%b",
-            uut.SH, uut.RD_F, uut.BL, uut.SOH_OP, uut.ALU_OP, uut.RAM_CTRL, uut.L,
-            uut.SR, uut.RF_LE, uut.PSW_EN, uut.CO_EN, uut.COMB);
-        $display("EX : BL=%b SOH_OP=%b ALU_OP=%b RAM_CTRL=%b L=%b SR=%b RF_LE=%b PSW_EN=%b CO_EN=%b COMB=%b",
-            uut.EX_BL, uut.EX_SOH_OP, uut.EX_ALU_OP, uut.EX_RAM_CTRL, uut.EX_L, uut.EX_SR,
-            uut.EX_RF_LE, uut.EX_PSW_EN, uut.EX_CO_EN, uut.EX_COMB);
-
-        $display("MEM in : RAM_CTRL=%b L=%b RF_LE=%b",
-            uut.MEM_RAM_CTRL_out, uut.MEM_L_out, uut.MEM_RF_LE_out);
-
-        $display("WB in : RF_LE=%b\n", uut.WB_RF_LE_out);
-
           $monitor(
-    "VALITADION LINE: Time=%0t | PCFront=%d | GR1=%d | GR2=%d | GR3=%d | GR4=%d | GR5=%d | GR10=%d | GR11=%d | GR12=%d | GR14=%d",
+    "VALITADION LINE: Time=%0t |Inst=%s| PCFront=%d | GR1=%d | GR2=%d | GR3=%d | GR4=%d | GR5=%d | GR10=%d | GR11=%d | GR12=%d | GR14=%d",
     $time,
+    keyword,
     uut.PCFrontOut,
     uut.RF.reg_file[1],
     uut.RF.reg_file[2],

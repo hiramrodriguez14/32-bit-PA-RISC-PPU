@@ -1,18 +1,17 @@
-`include "data_memory.v"
+`include "../modules/data_memory.v"
 `timescale 1ns / 1ps
 
 module data_memory_tb;
-    reg clk;
+
     reg [7:0] A;
     reg [31:0] DI;
     wire [31:0] DO;
     reg [1:0] Size;
     reg RW;
     reg E;
-
+    reg clk;
     // Instancia de la memoria
     DataMemory RAM (
-        .clk(clk),
         .A(A),
         .DI(DI),
         .DO(DO),
@@ -34,19 +33,19 @@ module data_memory_tb;
 
         // Leer word de localizaciones 0, 4, 8 y 12
         A = 8'h00; Size = 2'b10; #10;
-        $display("A=%d, DO=%h, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
+        $display("A=%d, DO=%b, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
         A = 8'h04; Size = 2'b10; #10;
-        $display("A=%d, DO=%h, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
+        $display("A=%d, DO=%b, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
         A = 8'h08; Size = 2'b10; #10;
-        $display("A=%d, DO=%h, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
+        $display("A=%d, DO=%b, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
         A = 8'h0C; Size = 2'b10; #10;
-        $display("A=%d, DO=%h, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
+        $display("A=%d, DO=%b, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
 
         // Leer byte de localizaciones 0 y 3
-        A = 8'h00; Size = 2'b00; #10;
-        $display("A=%d, DO=%h, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
-        A = 8'h03; Size = 2'b00; #10;
-        $display("A=%d, DO=%h, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
+        A = 8'd48; Size = 2'b00; #10;
+        $display("A=%d, DO=%b, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
+        A = 8'd52; Size = 2'b00; #10;
+        $display("A=%d, DO=%b, Size=%b, RW=%b, E=%b", A, DO, Size, RW, E);
 
         // Leer halfword de localizaciones 4 y 6
         A = 8'h04; Size = 2'b01; #10;

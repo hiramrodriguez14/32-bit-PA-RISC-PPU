@@ -9,7 +9,7 @@ module instruction_memory (
     reg [7:0] Mem [0:255]; // Memoria de 256 bytes
 
     initial begin
-        $readmemb("Test_1_PA-RISC.txt", Mem); // Leer binario en lugar de hex
+        $readmemb("Test_2_-PA-RISC.txt", Mem); // Leer binario en lugar de hex
     end
 
     always @(*) begin

@@ -242,7 +242,7 @@ module control_unit(
                 SOH_OP = 3'b011;
                 RAM_CTRL = 4'b0000;
                 L = 1'b0;
-                ID_SR = 2'b10;
+                ID_SR = 2'b00;
                 RF_LE = 1'b1;
                 PSW_EN = 1'b0;
                 CO_EN = 1'b0;
@@ -323,7 +323,7 @@ module control_unit(
                 case (instruction[12:10]) // opcode 2
                     3'b110: begin // Shift Right with zero extension (EXTRU)
                         ALU_OP = 4'b1010;
-                        RD_F = 2'b10;
+                        RD_F = 2'b00;
                         BL = 1'b0;
                         SOH_OP = 3'b100;
                         RAM_CTRL = 4'b0000;
@@ -337,7 +337,7 @@ module control_unit(
                     end
                     3'b111: begin // Shift Right with sign extension (EXTRS)
                         ALU_OP = 4'b1010;
-                        RD_F = 2'b10;
+                        RD_F = 2'b00;
                         BL = 1'b0;
                         SOH_OP = 3'b101;
                         RAM_CTRL = 4'b0000;
@@ -356,7 +356,7 @@ module control_unit(
                 case (instruction[12:10]) // opcode 2
                     3'b010: begin // Shift Left with zero extension (ZDEP)
                         ALU_OP = 4'b1010;
-                        RD_F = 2'b10;
+                        RD_F = 2'b00;
                         BL = 1'b0;
                         SOH_OP = 3'b110;
                         RAM_CTRL = 4'b0000;

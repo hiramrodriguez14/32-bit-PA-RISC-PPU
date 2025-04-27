@@ -1,6 +1,6 @@
 module DataMemory (
    
-    input wire [31:0] A,       // Dirección de memoria (8 bits para 256 bytes)
+    input wire [7:0] A,       // Dirección de memoria (8 bits para 256 bytes)
     input wire [31:0] DI,     // Datos de entrada
     output reg [31:0] DO,     // Datos de salida
     input wire [1:0] Size,    // Tamaño: 00 = byte, 01 = halfword, 10 = word
@@ -15,7 +15,7 @@ module DataMemory (
     reg [7:0] temp;
 
     initial begin
-        file = $fopen("Test_1_PA-RISC.txt", "r");
+        file = $fopen("Test_2_-PA-RISC.txt", "r");
         if (file == 0) begin
             $display("ERROR: No se pudo abrir Test_1_PA-RISC.txt");
             $finish;
