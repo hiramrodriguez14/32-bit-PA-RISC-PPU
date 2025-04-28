@@ -20,13 +20,13 @@ module PA_RISC_tb;
     initial begin
         reset = 1;
         #3 reset = 0;
-        #145 $finish; // Aumenté tiempo para permitir ejecución larga si es necesario
+        #210 $finish; // Aumenté tiempo para permitir ejecución larga si es necesario
     end
 
       integer i;
 initial begin
-    #140;
-    for (i = 132; i <= 175; i = i + 4) begin
+    #200;
+    for (i = 0; i <= 175; i = i + 4) begin
         $write("Mem[%0d-%0d] = ", i, i+3);
         $write("%b %b %b %b\n", 
             uut.datamemory.Mem[i],
@@ -99,7 +99,7 @@ end
         $display("WB in : RF_LE=%b\n", uut.WB_RF_LE_out);
 
           $monitor(
-    "VALITADION LINE: Time=%0t | PCFront=%d | GR1=%d | GR2=%d | GR3=%d | GR4=%d | GR5=%d | GR10=%d | GR11=%d | GR12=%d | GR14=%d",
+    "VALITADION LINE: Time=%0t | PCFront=%d | GR1=%d | GR2=%d | GR3=%d | GR4=%d | GR5=%b | GR10=%d | GR11=%d | GR12=%d | GR14=%d | ALU_A=%b | ALU_B=%b | ALU-OUT=%b | DI=%b | DO=%b | A=%b |",
     $time,
     uut.PCFrontOut,
     uut.RF.reg_file[1],
@@ -110,7 +110,14 @@ end
     uut.RF.reg_file[10],
     uut.RF.reg_file[11],
     uut.RF.reg_file[12],
-    uut.RF.reg_file[14]
+    uut.RF.reg_file[14],
+    uut.A_out,
+    uut.EX_SOH_N,
+    uut.ALU_Out,
+    uut.MEM_RB_out,
+    uut.MEM_DATA_OUT,
+    uut.MEM_ALU_OUT_out[7:0]
+   
 );
     end
 

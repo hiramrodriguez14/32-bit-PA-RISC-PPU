@@ -20,13 +20,13 @@ module PA_RISC_tb;
     initial begin
         reset = 1;
         #3 reset = 0;
-        #145 $finish; // Aumenté tiempo para permitir ejecución larga si es necesario
+        #300 $finish; // Aumenté tiempo para permitir ejecución larga si es necesario
     end
 
       integer i;
 initial begin
-    #140;
-    for (i = 132; i <= 175; i = i + 4) begin
+    #245;
+    for (i = 0; i <= 175; i = i + 4) begin
         $write("Mem[%0d-%0d] = ", i, i+3);
         $write("%b %b %b %b\n", 
             uut.datamemory.Mem[i],

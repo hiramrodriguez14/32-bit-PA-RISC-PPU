@@ -1,5 +1,4 @@
 module DataMemory (
-   
     input wire [7:0] A,       // Dirección de memoria (8 bits para 256 bytes)
     input wire [31:0] DI,     // Datos de entrada
     output reg [31:0] DO,     // Datos de salida
@@ -15,9 +14,9 @@ module DataMemory (
     reg [7:0] temp;
 
     initial begin
-        file = $fopen("Test_2_-PA-RISC.txt", "r");
+        file = $fopen("Test_2_PA-RISC.txt", "r");
         if (file == 0) begin
-            $display("ERROR: No se pudo abrir Test_1_PA-RISC.txt");
+            $display("ERROR: No se pudo abrir Test_2_PA-RISC.txt");
             $finish;
         end
         
@@ -33,36 +32,37 @@ module DataMemory (
 
         $fclose(file);
 
-        // Mostrar los primeros 16 bytes para verificar carga
-        for (i = 0; i < 16; i = i + 1) begin
-            $display("Mem[%0d] = %b", i, Mem[i]);
-        end
+
     end
 
+    // Lógica combinacional para lectura y escritura
     always @(*) begin
-        if (RW == 0) begin // Operación de lectura
+        if (RW == 0) begin
+            // Operación de lectura
             case (Size)
                 2'b00: DO = {24'b0, Mem[A]}; // Leer un byte
                 2'b01: DO = {16'b0, Mem[A], Mem[A+1]}; // Leer un halfword
                 2'b10: DO = {Mem[A], Mem[A+1], Mem[A+2], Mem[A+3]}; // Leer un word
                 default: DO = 32'b0;
             endcase
-        end
-
-        if (RW == 1 && E == 1) begin // Escritura habilitada
+        end else if (RW == 1 && E == 1) begin
+            // Operación de escritura
             case (Size)
-                2'b00: Mem[A] <= DI[7:0]; // Escribir un byte
+                2'b00: Mem[A] = DI[7:0]; // Escribir un byte
                 2'b01: begin // Escribir un halfword (big-endian)
-                    Mem[A]   <= DI[15:8];
-                    Mem[A+1] <= DI[7:0];
+                    Mem[A]   = DI[15:8];
+                    Mem[A+1] = DI[7:0];
                 end
                 2'b10: begin // Escribir un word (big-endian)
-                    Mem[A]   <= DI[31:24];
-                    Mem[A+1] <= DI[23:16];
-                    Mem[A+2] <= DI[15:8];
-                    Mem[A+3] <= DI[7:0];
+                    Mem[A]   = DI[31:24];
+                    Mem[A+1] = DI[23:16];
+                    Mem[A+2] = DI[15:8];
+                    Mem[A+3] = DI[7:0];
                 end
             endcase
+            DO = 32'b0; // En modo escritura, DO no es relevante
+        end else begin
+            DO = 32'b0; // Default
         end
     end
 

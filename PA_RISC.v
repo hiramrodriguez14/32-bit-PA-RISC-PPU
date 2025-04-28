@@ -397,7 +397,7 @@ EX_MEM EX_MEM(
 );
 
 DataMemory datamemory(
-    .A(MEM_ALU_OUT_out),
+    .A(MEM_ALU_OUT_out[7:0]),
     .DI(MEM_RB_out),
     .DO(MEM_DATA_OUT),
     .Size(MEM_RAM_CTRL_out[3:2]),
