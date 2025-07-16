@@ -397,6 +397,7 @@ EX_MEM EX_MEM(
 );
 
 DataMemory datamemory(
+    .clk(clk),
     .A(MEM_ALU_OUT_out[7:0]),
     .DI(MEM_RB_out),
     .DO(MEM_DATA_OUT),

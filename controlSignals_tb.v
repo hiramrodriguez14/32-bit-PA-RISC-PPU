@@ -1,5 +1,5 @@
 `timescale 1ns / 1ns
-`include "PA_RISC.v"
+
 
 module PA_RISC_tb;
 

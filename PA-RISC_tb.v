@@ -20,7 +20,7 @@ module PA_RISC_tb;
     initial begin
         reset = 1;
         #3 reset = 0;
-        #210 $finish; // Aumenté tiempo para permitir ejecución larga si es necesario
+        #202 $finish; 
     end
 
       integer i;
@@ -99,7 +99,7 @@ end
         $display("WB in : RF_LE=%b\n", uut.WB_RF_LE_out);
 
           $monitor(
-    "VALITADION LINE: Time=%0t | PCFront=%d | GR1=%d | GR2=%d | GR3=%d | GR4=%d | GR5=%b | GR10=%d | GR11=%d | GR12=%d | GR14=%d | ALU_A=%b | ALU_B=%b | ALU-OUT=%b | DI=%b | DO=%b | A=%b |",
+    "VALITADION LINE: Time=%0t | PCFront=%d | GR1=%d | GR2=%d | GR3=%d | GR4=%d | GR5=%b | GR10=%d | GR11=%d | GR12=%d | GR14=%d|",
     $time,
     uut.PCFrontOut,
     uut.RF.reg_file[1],
@@ -110,14 +110,7 @@ end
     uut.RF.reg_file[10],
     uut.RF.reg_file[11],
     uut.RF.reg_file[12],
-    uut.RF.reg_file[14],
-    uut.A_out,
-    uut.EX_SOH_N,
-    uut.ALU_Out,
-    uut.MEM_RB_out,
-    uut.MEM_DATA_OUT,
-    uut.MEM_ALU_OUT_out[7:0]
-   
+    uut.RF.reg_file[14]
 );
     end
 
