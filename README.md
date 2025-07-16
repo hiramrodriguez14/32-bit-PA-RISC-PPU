@@ -11,7 +11,7 @@ The processor supports a simplified **instruction set architecture (ISA)** with 
   
 ### Block Diagram
 
-![Block Diagram](test/PA-RISC BLOCK DIAGRAM FINAL.png)
+![Block Diagram](PA-RISC BLOCK DIAGRAM FINAL.png)
 
 
 The processor includes:
