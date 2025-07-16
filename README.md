@@ -8,14 +8,9 @@ The processor supports a simplified **instruction set architecture (ISA)** with 
 - **Execute**
 - **Memory**
 - **Write Back**
-- 
+  
 ### Block Diagram
-   +-----------+       +-----------+       +-----------+       +-----------+       +-------------+
-   |  Fetch    | --->  |  Decode   | --->  | Execute   | --->  |  Memory   | --->  |  Write Back |
-   +-----------+       +-----------+       +-----------+       +-----------+       +-------------+
-        |                   |                   |                   |                    |
-   [Instruction Mem]   [Register File]     [ALU + Control]    [Data Memory]       [Register File]
-   
+
 ![Block Diagram](test/PA-RISC BLOCK DIAGRAM FINAL.png)
 
 
