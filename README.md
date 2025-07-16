@@ -115,11 +115,9 @@ The processor includes:
 
 ## How to Use
 
-1. Open the Verilog project in your preferred HDL environment (e.g., ModelSim, Icarus Verilog).
+1. Open the Verilog project in HDL environment Icarus Verilog.
 2. Load one of the machine code programs into instruction memory.
 3. Run the simulation using the provided testbench.
 4. Observe the processor’s behavior through waveform analysis or terminal output.
 
----
 
-Let me know if you'd like to add simulation instructions, waveform screenshots, or documentation formatting tips.
